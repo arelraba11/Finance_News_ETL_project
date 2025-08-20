@@ -18,7 +18,8 @@ Visualization and analysis through Metabase.
 3. Start services: `docker compose up -d`
 4. Create & activate a virtualenv (Python 3.11+).
 5. Install deps: `pip install -r requirements.txt`
-6. Run ETL jobs in sequence: `python -m src.application.extract_job
-python -m src.application.transform_job
-python -m src.application.load_job`
+6. Run ETL jobs in sequence: 
+`python -m src.application.extract_job`
+`python -m src.application.transform_job`
+`python -m src.application.load_job`
 7. Open Metabase → connect to Postgres → build dashboards from the news table.
