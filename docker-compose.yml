@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg_news
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/00_schema.sql:ro
+
+  adminer:
+    image: adminer:4
+    container_name: adminer_news
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "8081:8080"
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase_news
+    restart: unless-stopped
+    environment:
+      MB_JETTY_PORT: 3000
+      MB_DB_FILE: /metabase.db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - metabase-data:/metabase.db
+
+volumes:
+  pg_data:
+  metabase-data:
