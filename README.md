@@ -1,21 +1,31 @@
 # Finance News ETL (MVP)
 
-Minimal ETL to pull financial news, score sentiment, and load to Postgres. UI via Metabase.
+Minimal ETL pipeline to pull financial market news, apply sentiment scoring, and load into Postgres.
+Visualization and analysis through Metabase.
 
 ## Services
-- Postgres: `localhost:5432`
-- Adminer: http://localhost:8081
-- Metabase: http://localhost:3000
+•   Postgres → localhost:5432
+•	Adminer → http://localhost:8081
+•	Metabase → http://localhost:3000
 
 ## Quickstart
-1. Install Docker Desktop
-2. Copy `.env.example` to `.env` and fill values (DB + NEWSAPI_KEY)
-3. `docker compose up -d` (from project root)
-4. Create and activate a virtualenv for Python 3.11+
-5. `pip install -r requirements.txt`
-6. Run `python src/application/extract_job.py` (first run will create a CSV)
-7. Run `python src/application/transform_job.py`
-8. Run `python src/application/load_job.py`
-9. Open Metabase and connect to Postgres; build the dashboard queries from the plan.
+•   Install Docker Desktop.
+•   Copy .env.example → .env and set values (DB_URL, NEWSAPI_KEY).
+•   Start services: `docker compose up -d`
+•   Create & activate a virtualenv (Python 3.11+).
+•   Install deps: `pip install -r requirements.txt`
+•   Run ETL jobs in sequence:
+`python -m src.application.extract_job
+python -m src.application.transform_job
+python -m src.application.load_job`
+•   Open Metabase → connect to Postgres → build dashboards from news table.
 
-Airflow will be added after MVP is working.
+## Example Dashboards
+•	Sentiment distribution (Positive/Negative/Neutral).
+•	News volume over time.
+•	Sources breakdown (which sites are more positive/negative).
+
+## Roadmap
+•	Add Airflow orchestration.
+•	Schedule daily ETL runs.
+•	Enrich news with tickers and market data.
